@@ -1,0 +1,9 @@
+{
+	"name": "adf-intech-dev-euwest",
+	"location": "westeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d3153848-5f7c-4d74-ba3d-60c837d1d39d",
+		"tenantId": "c5daae7f-6073-41e9-989d-c33dd501865e"
+	}
+}
