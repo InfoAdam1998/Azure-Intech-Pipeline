@@ -1,0 +1,27 @@
+{
+	"name": "ls_sql_server",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "ADAMOULIS\\SQLEXPRESS",
+			"database": "AdventureWorks2019",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "adam",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_akv_intech",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "akv-password-sql"
+			}
+		},
+		"connectVia": {
+			"referenceName": "SelfHostedSQL",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
