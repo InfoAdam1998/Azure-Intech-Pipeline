@@ -6,7 +6,7 @@
 		"typeProperties": {
 			"server": "ADAMOULIS\\SQLEXPRESS",
 			"database": "AdventureWorks2019",
-			"encrypt": "mandatory",
+			"encrypt": "optional",
 			"trustServerCertificate": false,
 			"authenticationType": "SQL",
 			"userName": "adam",
