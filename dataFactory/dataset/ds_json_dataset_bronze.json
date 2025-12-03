@@ -1,5 +1,5 @@
 {
-	"name": "ds_json_dataset_landing",
+	"name": "ds_json_dataset_bronze",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_dl_intech",
@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "params_dataset_landing.json",
+				"fileName": "params_dataset_bronze.json",
 				"fileSystem": "df-config"
 			}
 		},
