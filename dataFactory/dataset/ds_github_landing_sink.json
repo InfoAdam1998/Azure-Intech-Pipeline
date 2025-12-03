@@ -1,5 +1,5 @@
 {
-	"name": "ds_github_data_sink",
+	"name": "ds_github_landing_sink",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_dl_intech",
@@ -12,6 +12,9 @@
 			"p_file": {
 				"type": "string"
 			}
+		},
+		"folder": {
+			"name": "01_github_to_landing"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
@@ -26,7 +29,7 @@
 					"value": "@dataset().p_folder",
 					"type": "Expression"
 				},
-				"fileSystem": "bronze"
+				"fileSystem": "landing"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

@@ -10,6 +10,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "01_github_to_landing"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

@@ -5,6 +5,9 @@
 			"referenceName": "ls_dl_intech",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "00_utils-folder"
+		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {
