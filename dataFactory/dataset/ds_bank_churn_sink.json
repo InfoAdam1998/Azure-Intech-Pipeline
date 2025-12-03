@@ -1,0 +1,27 @@
+{
+	"name": "ds_bank_churn_sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_dl_intech",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "03_landing_to_bronze_sink"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Bank_Churn.parquet",
+				"folderPath": {
+					"value": "@concat('Bank_Churn/', formatDateTime(utcNow(), 'yyyy-MM-dd'))",
+					"type": "Expression"
+				},
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

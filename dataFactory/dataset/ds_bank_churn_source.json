@@ -1,0 +1,27 @@
+{
+	"name": "ds_bank_churn_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_dl_intech",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "02_landing_to_bronze_source"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Bank_Churn.csv",
+				"folderPath": "Bank_Churn",
+				"fileSystem": "landing"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

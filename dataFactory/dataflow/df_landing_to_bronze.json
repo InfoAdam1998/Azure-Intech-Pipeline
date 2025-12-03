@@ -1,0 +1,109 @@
+{
+	"name": "df_landing_to_bronze",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_bank_churn_source",
+						"type": "DatasetReference"
+					},
+					"name": "SourceBankChurn"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_churn_messy_source",
+						"type": "DatasetReference"
+					},
+					"name": "SourceBankChurnMessy"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_data_dictionary_source",
+						"type": "DatasetReference"
+					},
+					"name": "SourceBankDataDictionary"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_bank_churn_sink",
+						"type": "DatasetReference"
+					},
+					"name": "SinkBankChurn"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_churn_messy_sink",
+						"type": "DatasetReference"
+					},
+					"name": "SinkBankChurnMessy"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_data_dictionary_sink",
+						"type": "DatasetReference"
+					},
+					"name": "SinkBankDataDictionary"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DerivedColumnBankChurn"
+				},
+				{
+					"name": "DerivedColumnBankChurnMessy"
+				},
+				{
+					"name": "DerivedColumnDataDictionary"
+				}
+			],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SourceBankChurn",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SourceBankChurnMessy",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SourceBankDataDictionary",
+				"SourceBankChurn derive({_ingest_timestamp} = currentUTC(),",
+				"          {_source_data} = 'Github',",
+				"          {_batch_id} = toString(currentUTC(), 'yyyyMMdd_HHmmss')) ~> DerivedColumnBankChurn",
+				"SourceBankChurnMessy derive({_ingest_timestamp} = currentUTC(),",
+				"          {_source_data} = 'Github',",
+				"          {_batch_id} = toString(currentUTC(), 'yyyyMMdd_HHmmss')) ~> DerivedColumnBankChurnMessy",
+				"SourceBankDataDictionary derive({_ingest_timestamp} = currentUTC(),",
+				"          {_source_data} = 'Github',",
+				"          {_batch_id} = toString(currentUTC(), 'yyyyMMdd_HHmmss')) ~> DerivedColumnDataDictionary",
+				"DerivedColumnBankChurn sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkBankChurn",
+				"DerivedColumnBankChurnMessy sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkBankChurnMessy",
+				"DerivedColumnDataDictionary sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkBankDataDictionary"
+			]
+		}
+	}
+}
