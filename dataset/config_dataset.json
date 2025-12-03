@@ -1,0 +1,17 @@
+[
+    {
+        "p_rel_url" : "InfoAdam1998/Azure-Intech-Pipeline/refs/heads/dev/dataset/Bank_Churn.csv",
+        "p_folder" : "Bank_Churn",
+        "p_file" : "Bank_Churn.parquet"
+    },
+    {
+        "p_rel_url" : "InfoAdam1998/Azure-Intech-Pipeline/refs/heads/dev/dataset/Bank_Churn_Data_Dictionary.csv",
+        "p_folder" : "Bank_Churn_Data_Dictionary",
+        "p_file" : "Bank_Churn_Data_Dictionary.parquet"
+    },
+    {
+        "p_rel_url" : "InfoAdam1998/Azure-Intech-Pipeline/refs/heads/dev/dataset/Bank_Churn_Messy.csv",
+        "p_folder" : "Bank_Churn_Messy",
+        "p_file" : "Bank_Churn_Messy.parquet"
+    }
+]
