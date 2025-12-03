@@ -1,0 +1,19 @@
+{
+	"name": "ds_sql_server_sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_dl_intech",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

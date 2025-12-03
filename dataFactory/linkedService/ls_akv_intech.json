@@ -1,0 +1,10 @@
+{
+	"name": "ls_akv_intech",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://akv-intech.vault.azure.net/"
+		}
+	}
+}

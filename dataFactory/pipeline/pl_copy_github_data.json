@@ -1,0 +1,195 @@
+{
+	"name": "pl_copy_github_data",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup for JSON file",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "ds_json_dataset",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach metadata within JSON",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup for JSON file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup for JSON file').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy data from github",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "HttpReadSettings",
+										"requestMethod": "GET"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "ds_github_data_source",
+									"type": "DatasetReference",
+									"parameters": {
+										"p_rel_url": {
+											"value": "@item().p_rel_url",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_github_data_sink",
+									"type": "DatasetReference",
+									"parameters": {
+										"p_folder": {
+											"value": "@item().p_folder",
+											"type": "Expression"
+										},
+										"p_file": {
+											"value": "@item().p_file",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "Success notification",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "ForEach metadata within JSON",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": {
+						"value": "https://prod-202.westeurope.logic.azure.com:443/workflows/c17db4deb601418288a34efc0a674501/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=v7Zfqsnb5eqYYfZMDXczFBrjcugxvw-6CXZbhExhmL4",
+						"type": "Expression"
+					},
+					"body": {
+						"value": "{\n    \"pipelineName\": \"@{pipeline().Pipeline}\", \n    \"status\": \"Success\", \n    \"runId\": \"@{pipeline().RunId}\", \n    \"time\": \"@{utcNow()}\" \n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Failed notification",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "ForEach metadata within JSON",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": {
+						"value": "https://prod-202.westeurope.logic.azure.com:443/workflows/c17db4deb601418288a34efc0a674501/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=v7Zfqsnb5eqYYfZMDXczFBrjcugxvw-6CXZbhExhmL4",
+						"type": "Expression"
+					},
+					"body": {
+						"value": "{\n    \"pipelineName\": \"@{pipeline().Pipeline}\", \n    \"status\": \"Failed\", \n    \"runId\": \"@{pipeline().RunId}\", \n    \"time\": \"@{utcNow()}\" \n}",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
