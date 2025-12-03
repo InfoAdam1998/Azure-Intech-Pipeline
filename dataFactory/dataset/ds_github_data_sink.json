@@ -1,0 +1,41 @@
+{
+	"name": "ds_github_data_sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_dl_intech",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"p_folder": {
+				"type": "string"
+			},
+			"p_file": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().p_file",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().p_folder",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@concat('bronze/',formatDateTime(utcNow(), 'yyyy/MM/dd'))",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

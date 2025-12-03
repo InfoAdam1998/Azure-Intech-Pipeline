@@ -1,0 +1,19 @@
+{
+	"name": "ds_json_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_dl_intech",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "config_dataset.json",
+				"fileSystem": "df-config"
+			}
+		},
+		"schema": {}
+	}
+}
