@@ -1,0 +1,19 @@
+{
+	"name": "ls_dbw_intech",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-1177801128134889.9.azuredatabricks.net",
+			"accessToken": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_akv_intech",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "akv-dbw-token"
+			},
+			"existingClusterId": "1204-000337-0m27x9de"
+		}
+	}
+}
