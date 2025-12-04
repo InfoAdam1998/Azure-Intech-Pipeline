@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 3",
+	"properties": {
+		"content": {
+			"query": "CREATE VIEW FranceView AS\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://dlintech001.dfs.core.windows.net/gold/Bank_Churn/geography=France/date_of_processing=2025-12-04/part-00000-4216d405-cce1-42a2-9f9a-ad91def8ab5b.c000.snappy.parquet',\n        FORMAT = 'PARQUET'\n    ) AS [result]\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "gold_db",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
