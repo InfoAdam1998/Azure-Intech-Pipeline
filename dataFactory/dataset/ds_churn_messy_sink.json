@@ -1,18 +1,23 @@
 {
-	"name": "ds_sql_server_sink",
+	"name": "ds_churn_messy_sink",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_dl_intech",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "sql-folder"
+			"name": "03_landing_to_bronze_sink"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "Bank_Churn_Messy.parquet",
+				"folderPath": {
+					"value": "@concat('Bank_Churn_Messy/', formatDateTime(utcNow(), 'yyyy-MM-dd'))",
+					"type": "Expression"
+				},
 				"fileSystem": "bronze"
 			},
 			"compressionCodec": "snappy"

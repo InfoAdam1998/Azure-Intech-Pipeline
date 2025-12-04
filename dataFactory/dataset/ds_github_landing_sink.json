@@ -1,12 +1,15 @@
 {
-	"name": "ds_github_data_source",
+	"name": "ds_github_landing_sink",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ls_github_intech",
+			"referenceName": "ls_dl_intech",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"p_rel_url": {
+			"p_folder": {
+				"type": "string"
+			},
+			"p_file": {
 				"type": "string"
 			}
 		},
@@ -17,11 +20,16 @@
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "HttpServerLocation",
-				"relativeUrl": {
-					"value": "@dataset().p_rel_url",
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().p_file",
 					"type": "Expression"
-				}
+				},
+				"folderPath": {
+					"value": "@dataset().p_folder",
+					"type": "Expression"
+				},
+				"fileSystem": "landing"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

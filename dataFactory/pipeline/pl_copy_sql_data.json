@@ -53,6 +53,9 @@
 				]
 			}
 		],
+		"folder": {
+			"name": "sql-folder"
+		},
 		"annotations": []
 	}
 }

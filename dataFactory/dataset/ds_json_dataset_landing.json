@@ -1,16 +1,19 @@
 {
-	"name": "ds_json_dataset",
+	"name": "ds_json_dataset_landing",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_dl_intech",
 			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "00_utils-folder"
 		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "config_dataset.json",
+				"fileName": "params_dataset_landing.json",
 				"fileSystem": "df-config"
 			}
 		},

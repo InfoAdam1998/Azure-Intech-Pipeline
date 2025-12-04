@@ -1,22 +1,22 @@
 {
-	"name": "ds_sql_server_sink",
+	"name": "ds_json_dataset_bronze",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_dl_intech",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "sql-folder"
+			"name": "00_utils-folder"
 		},
 		"annotations": [],
-		"type": "Parquet",
+		"type": "Json",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileSystem": "bronze"
-			},
-			"compressionCodec": "snappy"
+				"fileName": "params_dataset_bronze.json",
+				"fileSystem": "df-config"
+			}
 		},
-		"schema": []
+		"schema": {}
 	}
 }

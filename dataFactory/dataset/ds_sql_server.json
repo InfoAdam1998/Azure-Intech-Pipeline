@@ -5,6 +5,9 @@
 			"referenceName": "ls_sql_server",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "sql-folder"
+		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [

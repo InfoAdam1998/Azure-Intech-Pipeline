@@ -1,5 +1,5 @@
 {
-	"name": "pl_copy_github_data",
+	"name": "pl_github_to_landing",
 	"properties": {
 		"activities": [
 			{
@@ -27,7 +27,7 @@
 						}
 					},
 					"dataset": {
-						"referenceName": "ds_json_dataset",
+						"referenceName": "ds_json_dataset_landing",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -109,7 +109,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "ds_github_data_sink",
+									"referenceName": "ds_github_landing_sink",
 									"type": "DatasetReference",
 									"parameters": {
 										"p_folder": {

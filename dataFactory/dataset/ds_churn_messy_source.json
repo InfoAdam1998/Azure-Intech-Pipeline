@@ -1,27 +1,21 @@
 {
-	"name": "ds_github_data_source",
+	"name": "ds_churn_messy_source",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ls_github_intech",
+			"referenceName": "ls_dl_intech",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"p_rel_url": {
-				"type": "string"
-			}
-		},
 		"folder": {
-			"name": "01_github_to_landing"
+			"name": "02_landing_to_bronze_source"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "HttpServerLocation",
-				"relativeUrl": {
-					"value": "@dataset().p_rel_url",
-					"type": "Expression"
-				}
+				"type": "AzureBlobFSLocation",
+				"fileName": "Bank_Churn_Messy.csv",
+				"folderPath": "Bank_Churn_Messy",
+				"fileSystem": "landing"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
