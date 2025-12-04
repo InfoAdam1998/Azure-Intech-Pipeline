@@ -204,6 +204,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "01_github_to_landing"
+		},
 		"annotations": []
 	}
 }
