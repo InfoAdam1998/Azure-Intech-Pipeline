@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-intech-dev-euwest"
+		},
+		"ls_akv_intech_properties_typeProperties_baseUrl": {
+			"value": "https://akv-intech.vault.azure.net/"
+		},
+		"ls_dbw_intech_properties_typeProperties_existingClusterId": {
+			"value": "1204-000337-0m27x9de"
+		},
+		"ls_dl_intech_properties_typeProperties_url": {
+			"value": "https://dlintech001.dfs.core.windows.net/"
+		},
+		"ls_github_intech_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com"
+		},
+		"ls_sql_server_properties_typeProperties_server": {
+			"value": "ADAMOULIS\\SQLEXPRESS"
+		},
+		"ls_sql_server_properties_typeProperties_database": {
+			"value": "AdventureWorks2019"
+		},
+		"ls_sql_server_properties_typeProperties_userName": {
+			"value": "adam"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
