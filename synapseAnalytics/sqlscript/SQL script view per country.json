@@ -1,8 +1,8 @@
 {
-	"name": "SQL script 3",
+	"name": "SQL script view per country",
 	"properties": {
 		"content": {
-			"query": "CREATE VIEW GermanyView AS\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n        BULK 'https://dlintech001.dfs.core.windows.net/gold/Bank_Churn/geography=France/date_of_processing=2025-12-04/part-00000-4216d405-cce1-42a2-9f9a-ad91def8ab5b.c000.snappy.parquet',\n        FORMAT = 'PARQUET'\n    ) AS [result]\n",
+			"query": "-- Drop view if it exists\nDROP VIEW IF EXISTS GermanyView;\nGO\n-- Create view over all Parquet files in the folder\nCREATE VIEW GermanyView AS\nSELECT *\nFROM OPENROWSET(\n    BULK 'https://dlintech001.dfs.core.windows.net/gold/Bank_Churn/geography=France/date_of_processing=2025-12-04/',\n    FORMAT = 'PARQUET'\n) AS [result];\nGO\n\n-- Drop view if it exists\nDROP VIEW IF EXISTS FranceView;\nGO\n-- Create view over all Parquet files in the folder\nCREATE VIEW FranceView AS\nSELECT *\nFROM OPENROWSET(\n    BULK 'https://dlintech001.dfs.core.windows.net/gold/Bank_Churn/geography=France/date_of_processing=2025-12-04/',\n    FORMAT = 'PARQUET'\n) AS [result];\nGO\n\n\n-- Drop view if it exists\nDROP VIEW IF EXISTS SpainView;\nGO\n-- Create view over all Parquet files in the folder\nCREATE VIEW SpainView AS\nSELECT *\nFROM OPENROWSET(\n    BULK 'https://dlintech001.dfs.core.windows.net/gold/Bank_Churn/geography=France/date_of_processing=2025-12-04/',\n    FORMAT = 'PARQUET'\n) AS [result];\nGO\n\n",
 			"metadata": {
 				"language": "sql"
 			},
