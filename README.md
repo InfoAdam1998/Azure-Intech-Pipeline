@@ -14,8 +14,7 @@ This project demonstrates a fully dynamic, scalable data ingestion and transform
    * ADF ingests datasets directly from a GitHub repository using an **HTTP linked service**.
    * Data is dynamically ingested based on configurations stored in a **JSON file**, enabling easy addition or removal of datasets.
    * Ingested files are stored in a **landing container** in ADLS Gen2.
-
-     * Files are stored in folders named after the filename.
+   * Files are stored in folders named after the filename.
    * Any ingestion failures are automatically redirected to a **failed container**.
    * ADF **monitoring** and a **Logic App** are used to send notifications for each pipeline run.
 
@@ -27,11 +26,7 @@ After landing, ADF executes a **data flow** to process data into the Bronze laye
 
 * Reads data from the **landing** container.
 * Creates subfolders named after each dataset and execution date.
-* Adds **three metadata columns** before writing to Bronze for tracking:
-
-  * Ingestion timestamp
-  * Source filename
-  * Pipeline run ID
+* Adds **metadata columns** before writing to Bronze for tracking
 * Writes processed raw-format files into the **bronze container**.
 
 ---
@@ -43,7 +38,6 @@ Using Databricks, the pipeline prepares clean, structured, analytics-ready data:
 1. Mounts ADLS Gen2 using a **service principal**.
 2. Loads raw data from the Bronze layer.
 3. Applies thorough **column-by-column data cleaning**, including:
-
    * Type casting
    * Null handling
    * Standardization
@@ -86,23 +80,6 @@ The ingestion framework is fully dynamic:
 * Adding or removing a dataset is as simple as modifying the JSON.
 * ADF pipelines read this configuration at runtime to determine the ingestion list.
 
-Example structure:
-
-```json
-{
-  "datasets": [
-    {
-      "name": "dataset1",
-      "url": "https://raw.githubusercontent.com/..."
-    },
-    {
-      "name": "dataset2",
-      "url": "https://raw.githubusercontent.com/..."
-    }
-  ]
-}
-```
-
 ---
 
 ## Key Features
@@ -125,5 +102,3 @@ Example structure:
 * **Azure Synapse Analytics** (SQL serverless views)
 * **Power BI**
 * **GitHub (source data)**
-
-If you want, I can also generate a diagram, folder structure, or add step-by-step instructions.
