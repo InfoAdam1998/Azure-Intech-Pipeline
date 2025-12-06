@@ -1,28 +1,129 @@
-### Data Pipeline Overview
+# End-to-End Data Pipeline Using Azure Data Factory, ADLS Gen2, Databricks, Synapse, and Power BI
+<img width="1806" height="774" alt="Intech Azure Data Engineering Architecture" src="https://github.com/user-attachments/assets/72caf73a-145f-4a5c-b0d9-1434f2a9ed3b" />
 
-This project implements a full data pipeline that ingests datasets from a GitHub repository and processes them through multiple layers in Azure until they are ready for analytics in Power BI. The pipeline is designed to be dynamic, so adding or removing datasets only requires updating a JSON configuration file.
+## Overview
 
-Ingestion
+This project demonstrates a fully dynamic, scalable data ingestion and transformation pipeline using Azure Data Factory (ADF), Azure Data Lake Storage Gen2 (ADLS Gen2), Azure Databricks, Azure Synapse Analytics, and Power BI. The solution automates ingestion from a GitHub repository, applies quality checks, organizes data into bronze/silver/gold layers, and serves curated data to Synapse and Power BI for analytics.
 
-The process starts in Azure Data Factory, where datasets are pulled from GitHub using HTTP. Each file is stored in the Landing container in ADLS Gen2. The folder structure is based on the file name, making it easy to track each dataset as it arrives.
-If a file can't be ingested or has issues, it is automatically sent to a separate Failed container.
-Monitoring is built in using Azure Monitor and Logic Apps, which send notifications for every pipeline run, whether successful or not.
+---
 
-Bronze Layer
+## Architecture Summary
 
-ADF Data Flows read the raw Landing data and load it into the Bronze layer. Data is stored under a folder named after the dataset, followed by the date of ingestion (e.g., dataset_name/2025-01-01/).
-Before writing to Bronze, the flow adds three metadata fields so I can track when and how each file was ingested.
+1. **ADF Ingestion (HTTP Connector → ADLS Gen2)**
 
-Silver Layer
+   * ADF ingests datasets directly from a GitHub repository using an **HTTP linked service**.
+   * Data is dynamically ingested based on configurations stored in a **JSON file**, enabling easy addition or removal of datasets.
+   * Ingested files are stored in a **landing container** in ADLS Gen2.
 
-From there, Databricks takes over. A Service Principal is mounted to give Databricks access to ADLS.
-The Bronze data is loaded, and each dataset goes through a thorough cleaning process, handling issues column by column. Once cleaned, the data is written to the Silver container in Delta format, which makes it more efficient for downstream processing.
+     * Files are stored in folders named after the filename.
+   * Any ingestion failures are automatically redirected to a **failed container**.
+   * ADF **monitoring** and a **Logic App** are used to send notifications for each pipeline run.
 
-Gold Layer
+---
 
-For the Gold layer, another Databricks notebook reads the Silver tables, removes the metadata added earlier, and partitions the data by geography and processed time.
-The partitioned data is then exposed to Azure Synapse, where I create views that will be used for reporting.
+## Bronze Layer (ADF Data Flow)
 
-Reporting
+After landing, ADF executes a **data flow** to process data into the Bronze layer:
 
-Synapse connects directly to Power BI. From there, I build the visualizations using the cleaned and partitioned Gold layer data.
+* Reads data from the **landing** container.
+* Creates subfolders named after each dataset and execution date.
+* Adds **three metadata columns** before writing to Bronze for tracking:
+
+  * Ingestion timestamp
+  * Source filename
+  * Pipeline run ID
+* Writes processed raw-format files into the **bronze container**.
+
+---
+
+## Silver Layer (Databricks)
+
+Using Databricks, the pipeline prepares clean, structured, analytics-ready data:
+
+1. Mounts ADLS Gen2 using a **service principal**.
+2. Loads raw data from the Bronze layer.
+3. Applies thorough **column-by-column data cleaning**, including:
+
+   * Type casting
+   * Null handling
+   * Standardization
+   * Formatting corrections
+4. Writes cleaned datasets into the **silver container** in **Delta format**.
+
+---
+
+## Gold Layer (Databricks)
+
+Gold-level data is optimized for analytics and reporting:
+
+* Loads Silver data into a Gold notebook.
+* Removes metadata columns used during ingestion.
+* Applies **partitioning by geography**, then by **processed time**.
+* Writes partitioned Delta files to the **gold container**.
+
+---
+
+## Synapse Integration
+
+* The Gold Delta tables are exposed to **Azure Synapse Analytics**.
+* Synapse **views** are created on top of the Gold tables.
+* These views serve as the semantic layer for BI tools.
+
+---
+
+## Power BI Reporting
+
+* Power BI connects directly to Synapse views.
+* Basic visualizations are built on top of cleaned, curated, and well-modeled Gold data.
+
+---
+
+## Dynamic Dataset Ingestion (JSON Configuration)
+
+The ingestion framework is fully dynamic:
+
+* A JSON configuration file controls which datasets are ingested.
+* Adding or removing a dataset is as simple as modifying the JSON.
+* ADF pipelines read this configuration at runtime to determine the ingestion list.
+
+Example structure:
+
+```json
+{
+  "datasets": [
+    {
+      "name": "dataset1",
+      "url": "https://raw.githubusercontent.com/..."
+    },
+    {
+      "name": "dataset2",
+      "url": "https://raw.githubusercontent.com/..."
+    }
+  ]
+}
+```
+
+---
+
+## Key Features
+
+* Fully dynamic ingestion driven by JSON
+* Raw → Bronze → Silver → Gold medallion architecture
+* Automated failure handling and notifications
+* Metadata tracking from ingestion onward
+* Delta Lake storage for versioning, ACID transactions, and performance
+* End-to-end integration with Synapse and Power BI
+
+---
+
+## Technologies Used
+
+* **Azure Data Factory** (Pipelines, Data Flows)
+* **Azure Data Lake Storage Gen2**
+* **Azure Logic Apps**
+* **Azure Databricks** (Delta Lake, notebooks)
+* **Azure Synapse Analytics** (SQL serverless views)
+* **Power BI**
+* **GitHub (source data)**
+
+If you want, I can also generate a diagram, folder structure, or add step-by-step instructions.
