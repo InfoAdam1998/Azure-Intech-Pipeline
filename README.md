@@ -1,5 +1,5 @@
 # End-to-End Data Pipeline Using Azure Data Factory, ADLS Gen2, Databricks, Synapse, and Power BI
-<img width="1806" height="774" alt="Intech Azure Data Engineering Architecture" src="https://github.com/user-attachments/assets/72caf73a-145f-4a5c-b0d9-1434f2a9ed3b" />
+<img width="1806" height="774" alt="Intech Azure Data Engineering Architecture (1)" src="https://github.com/user-attachments/assets/665b7f36-6ed4-4089-a16f-bf622c6e7008" />
 
 ## Overview
 
